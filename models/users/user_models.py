@@ -14,3 +14,8 @@ class User(ABC):
 class FreeUser(User):
     def __init__(self, unique_id: str, username: str, playlists: Dict[str, Playlist]):
         super().__init__(unique_id=unique_id, username=username, playlists=playlists)
+
+
+class PremiumUser(User):
+    def __init__(self, unique_id: str, username: str, playlists: Dict[str, Playlist]):
+        super().__init__(unique_id=unique_id, username=username, playlists=playlists, user_type="premium")
