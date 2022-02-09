@@ -15,9 +15,15 @@ class CollectionDataBase:
         self.writer = writer
         self.entities = {}
 
-    def get_entity(self, entity_id: str):
+    def load_entity(self, entity_id: str):
         full_path = self.meta_data.path_template % entity_id
-        return self.reader(full_path)
+        self.entities[entity_id] = self.reader(full_path)
+
+    # TODO: check if valid id (raise exception if not)
+    def get_entity(self, entity_id: str):
+        if entity_id not in self.entities:  # load entity only if hasn't been loaded yet
+            self.load_entity(entity_id)
+        return self.entities[entity_id]
 
 
 # this db is capable of loading collections of objects from various file types.
