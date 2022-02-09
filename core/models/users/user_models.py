@@ -1,6 +1,7 @@
 from typing import Dict
 from abc import ABC
-from core.models.music import Playlist
+
+from core.models.music.music_models import Playlist
 
 
 class User(ABC):
