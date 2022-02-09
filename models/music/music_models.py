@@ -14,3 +14,10 @@ class Playlist:
     def __init__(self, name, songs):
         self.name: str = name
         self.songs: Dict[str, str] = songs
+
+
+class Album:
+    def __init__(self, unique_id, name, songs):
+        self.id: str = unique_id
+        self.name: str = name
+        self.songs: Dict[str: str] = songs
