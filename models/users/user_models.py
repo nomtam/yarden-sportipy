@@ -19,3 +19,9 @@ class FreeUser(User):
 class PremiumUser(User):
     def __init__(self, unique_id: str, username: str, playlists: Dict[str, Playlist]):
         super().__init__(unique_id=unique_id, username=username, playlists=playlists, user_type="premium")
+
+
+class Artist(PremiumUser):
+    def __init__(self, unique_id: str, username: str, playlists: Dict[str, Playlist], albums):
+        super().__init__(unique_id=unique_id, username=username, playlists=playlists)
+        self.albums: Dict[str, str] = albums
