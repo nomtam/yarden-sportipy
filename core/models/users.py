@@ -1,5 +1,8 @@
 from typing import Dict, List
 
+from helpers.consts import Limits
+from helpers.exceptions import ReachedFreePlaylistsLimit, ReachedFreePlaylistSongsLimit, PlaylistNameAlreadyExists
+
 
 class User:
     def __init__(self, id, password, playlists, account_type="free"):
@@ -9,4 +12,12 @@ class User:
         self.playlists: Dict[str, List[str]] = playlists  # name and list of songs ids
 
     def add_playlist(self, name: str, songs: List[str]):
-        self.playlists[name] = songs
+        if self.account_type == "free":
+            if len(self.playlists) >= Limits.FREE_PLAYLISTS_NUM:
+                raise ReachedFreePlaylistsLimit
+            if len(songs) > Limits.FREE_PLAYLIST_SONGS_NUM:
+                raise ReachedFreePlaylistSongsLimit
+        if name in self.playlists:
+            raise PlaylistNameAlreadyExists
+        else:
+            self.playlists[name] = songs

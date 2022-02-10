@@ -4,3 +4,7 @@ class PlaylistNameAlreadyExists(Exception):
 
 class ReachedFreePlaylistsLimit(Exception):
     pass
+
+
+class ReachedFreePlaylistSongsLimit(Exception):
+    pass
