@@ -1,5 +1,6 @@
-from typing import Dict, List
 import logging
+from typing import Dict, List
+
 from core.models.music import Song, Album, Artist
 from core.models.users import User
 from helpers.consts import Limits, CollectionNames, DocumentKeys, AccountTypes
@@ -30,11 +31,11 @@ class AppBase:
         try:
             user.add_playlist(playlist_name, songs)
         except PlaylistNameAlreadyExists:
-            print(f"{user_id} tried to add a playlist with a name he already has")
+            logging.info(f"{user_id} tried to add a playlist with a name he already has")
         except ReachedFreePlaylistsLimit:
-            print(f"{user_id} failed to add a playlist because he reached the free playlists num limit")
+            logging.info(f"{user_id} failed to add a playlist because he reached the free playlists num limit")
         except ReachedFreePlaylistSongsLimit:
-            print(f"{user_id} failed to add a playlist because he reached the free playlist songs num limit")
+            logging.info(f"{user_id} failed to add a playlist because he reached the free playlist songs num limit")
         else:
             self.db.save_doc(user.__dict__, CollectionNames.USERS_KEY)  # save new user state to the db
 
