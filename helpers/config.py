@@ -1,6 +1,6 @@
-class CollectionPaths:
-    SONG_PATH_TEMPLATE = "../resources/songs/song_%s.json"
-    ALBUM_PATH_TEMPLATE = "../resources/albums/album_%s.json"
-    USER_PATH_TEMPLATE = "../resources/users/user_%s.json"
-    ARTIST_PATH_TEMPLATE = "../resources/artists/artist_%s.json"
-
+ORIGINAL_SONGS_ROOT_PATH = r"..\resources\songs"
+ORIGINAL_SONGS_EXTENSION = ".json"
+SONGS_FILENAME_TEMPLATE = r"..\storage\files\songs\song_%s.json"
+ALBUMS_FILENAME_TEMPLATE = r"..\storage\files\albums\album_%s.json"
+ARTISTS_FILENAME_TEMPLATE = r"..\storage\files\artists\artist_%s.json"
+USERS_FILENAME_TEMPLATE = r"..\storage\files\users\user_%s.json"
