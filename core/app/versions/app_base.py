@@ -1,8 +1,8 @@
 from typing import Dict, List
-
+import logging
 from core.models.music import Song, Album, Artist
 from core.models.users import User
-from helpers.consts import Limits
+from helpers.consts import Limits, CollectionNames, DocumentKeys, AccountTypes
 from helpers.exceptions import *
 from storage.database import DocumentDataBase
 
@@ -10,16 +10,17 @@ from storage.database import DocumentDataBase
 class AppBase:
     def __init__(self, db: DocumentDataBase):
         self.db = db
-        self.songs: Dict[str, Song] = self.load_entities("songs", Song)
-        self.albums: Dict[str, Album] = self.load_entities("albums", Album)
-        self.artists: Dict[str, Artist] = self.load_entities("artists", Artist)
-        self.users: Dict[str, User] = self.load_entities("users", User)
+        self.songs: Dict[str, Song] = self.load_entities(CollectionNames.SONGS_KEY, Song)
+        self.albums: Dict[str, Album] = self.load_entities(CollectionNames.ALBUMS_KEY, Album)
+        self.artists: Dict[str, Artist] = self.load_entities(CollectionNames.ARTISTS_KEY, Artist)
+        self.users: Dict[str, User] = self.load_entities(CollectionNames.USERS_KEY, User)
+        logging.info("Finished loading all app entities")
 
     def load_entities(self, collection_name, cls: type):
         entities_docs = self.db.load_collection(collection_name)
         entities_objects = {}
         for entity_doc in entities_docs:
-            entity_id = entity_doc["id"]
+            entity_id = entity_doc[DocumentKeys.ID]
             if entity_id not in entities_objects:
                 entities_objects[entity_id] = cls(**entity_doc)
         return entities_objects
@@ -35,11 +36,11 @@ class AppBase:
         except ReachedFreePlaylistSongsLimit:
             print(f"{user_id} failed to add a playlist because he reached the free playlist songs num limit")
         else:
-            self.db.save_doc(user.__dict__, "users")  # save new user state to the db
+            self.db.save_doc(user.__dict__, CollectionNames.USERS_KEY)  # save new user state to the db
 
     def limit_results(self, user_id, results):
         user_account_type = self.users[user_id].account_type
-        if user_account_type == "free":
+        if user_account_type == AccountTypes.FREE:
             results = results[:Limits.FREE_RESULTS_NUM]
         return results
 

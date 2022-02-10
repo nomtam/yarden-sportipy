@@ -2,6 +2,7 @@ import glob
 import os
 from collections import defaultdict
 from typing import Dict
+from helpers.consts import DocumentKeys
 
 
 class CollectionMetaData:
@@ -20,7 +21,7 @@ class DocumentDataBase:
         self.reader = reader
         self.writer = writer
 
-    # receives collection name and returns a list of json docs
+    # receives collection name and returns a list of docs
     def load_collection(self, collection_name):
         metadata = self.collections_metadata[collection_name]
         json_docs = []
@@ -28,8 +29,7 @@ class DocumentDataBase:
             json_docs.append(self.reader(filename))
         return json_docs
 
-    def save_doc(self, json_doc, collection_name):
+    def save_doc(self, doc, collection_name):
         metadata = self.collections_metadata[collection_name]
-        filename = metadata.filename_template % json_doc["id"]
-        self.writer(filename, json_doc)
-
+        filename = metadata.filename_template % doc[DocumentKeys.ID]
+        self.writer(filename, doc)

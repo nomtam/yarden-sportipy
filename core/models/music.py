@@ -8,10 +8,12 @@ class Song:
 
 
 class Album:
-    def __init__(self, id, name, artist, songs=[]):
+    def __init__(self, id, name, artist, songs=None):
         self.id = id
         self.name = name
         self.artist = artist
+        if not songs:
+            songs = list()
         self.songs = songs
 
     def add_song(self, song):
@@ -20,11 +22,15 @@ class Album:
 
 
 class Artist:
-    def __init__(self, id, name, albums=[], ft_songs=[]):
+    def __init__(self, id, name, albums=None, ft_songs=None):
         self.id = id
         self.name = name
-        self.albums = []
-        self.ft_songs = []
+        if not albums:
+            albums = list()
+        self.albums = albums
+        if not ft_songs:
+            ft_songs = list()
+        self.ft_songs = ft_songs
 
     def add_album(self, album):
         if album not in self.albums:
