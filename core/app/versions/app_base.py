@@ -17,6 +17,7 @@ class AppBase:
         self.users: Dict[str, User] = self.load_entities(CollectionNames.USERS_KEY, User)
         logging.info("Finished loading all app entities")
 
+    # CR: why not in helper?
     def load_entities(self, collection_name, cls: type):
         entities_docs = self.db.load_collection(collection_name)
         entities_objects = {}
@@ -40,6 +41,7 @@ class AppBase:
             self.db.save_doc(user.__dict__, CollectionNames.USERS_KEY)  # save new user state to the db
 
     def limit_results(self, user_id, results):
+        # CR: What if id doesn't exist?
         user_account_type = self.users[user_id].account_type
         if user_account_type == AccountTypes.FREE:
             results = results[:Limits.FREE_RESULTS_NUM]

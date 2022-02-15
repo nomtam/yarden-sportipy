@@ -5,6 +5,7 @@ from helpers.exceptions import ReachedFreePlaylistsLimit, ReachedFreePlaylistSon
 
 
 class User:
+    # CR: id shadows a built in name. It means you might have conflicts
     def __init__(self, id, password, playlists, account_type=AccountTypes.FREE):
         self.id: str = id
         self.password = password

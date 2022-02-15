@@ -25,11 +25,14 @@ class DocumentDataBase:
     def load_collection(self, collection_name):
         metadata = self.collections_metadata[collection_name]
         json_docs = []
+        # CR: same as in files_creator. from glob import glob
+        # CR: why *? comment explanation when leaving a magic string
         for filename in glob.glob(os.path.join(metadata.root_path, "*" + self.doc_extension)):
             json_docs.append(self.reader(filename))
         return json_docs
 
     def save_doc(self, doc, collection_name):
         metadata = self.collections_metadata[collection_name]
+        # CR: same as using magic strings. When using special math you have to explain why (the %)
         filename = metadata.filename_template % doc[DocumentKeys.ID]
         self.writer(filename, doc)

@@ -1,3 +1,5 @@
+# CR: a minor but if all the paths start the same maybe make an extra var and put it in there (what if tomorrow
+#  "storage" changes to "data"
 ORIGINAL_SONGS_ROOT_PATH = r"..\resources\songs"
 ORIGINAL_SONGS_EXTENSION = ".json"
 SONGS_FILENAME_TEMPLATE = r"..\storage\files\songs\song_%s.json"

@@ -1,3 +1,4 @@
+# CR: same comment about name shadowing with id
 class Song:
     def __init__(self, id, name, album, popularity, artists):
         self.id = id
