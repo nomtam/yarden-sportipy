@@ -7,7 +7,8 @@ from helpers.consts import Limits, CollectionNames, DocumentKeys, AccountTypes
 from helpers.exceptions import *
 from storage.database import DocumentDataBase
 
-
+# CR: this class might not be named GodClass but it's a god class.
+#  it loads data, searches on it and lets you save data
 class AppBase:
     def __init__(self, db: DocumentDataBase):
         self.db = db
@@ -27,6 +28,7 @@ class AppBase:
                 entities_objects[entity_id] = cls(**entity_doc)
         return entities_objects
 
+    # CR: why is this here? SRP for the class. Why not make a user class?
     def add_playlist(self, user_id: str, playlist_name: str, songs: List[str]):
         user = self.users[user_id]
         try:
@@ -66,6 +68,7 @@ class AppBase:
         songs_ids.extend(self.artists[artist_id].ft_songs)
         return songs_ids
 
+    # CR: why is this here? Why not make a search module? combining all here is an SRP breach
     def search_all_artists_names(self, user_id):
         return self.limit_results(user_id, [artist.name for artist in self.artists.values()])
 
