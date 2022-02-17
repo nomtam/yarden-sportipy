@@ -54,7 +54,6 @@ You could try using it in places where you want to perform DI.
 
 
 ## Things to Preserve
-* Using `logging` instead of mere `print` statements
+* Using a logging module.
 * Type Hints! - Althought not all of the code was covered, great job on using typings.
-They help a ton when working / reading someone elses code, without much effort \.
-* 
+They help a ton when working / reading someone elses code, without much effort.
