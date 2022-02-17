@@ -20,6 +20,7 @@ class DocumentKeys:
     POPULARITY = "popularity"
 
 # CR: FreeLimits, and then you don't have to use the word FREE 3 times
+# CR: [MD] I'd expect to have these values configurable.
 class Limits:
     FREE_PLAYLISTS_NUM = 5
     FREE_PLAYLIST_SONGS_NUM = 20

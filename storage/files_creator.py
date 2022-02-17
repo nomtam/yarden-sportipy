@@ -4,6 +4,7 @@
 #  ...
 #  The only reason all of this a minor is that this is a "single-use" class.
 #  (Although if it's single-use. Why didn't you delete it?)
+# CR: [MD] If this is a script and not part of the application it's OK to have it placed in a 'bin'/'scripts' folder at the root of the project.
 import glob
 import os
 from storage.reading import Reading
@@ -28,6 +29,8 @@ def get_original_songs_jsons():
     songs_jsons = []
     # CR: if you are using glob.glob it's better to only import it.
     #  It doesn't have a special effect here but in general this practice can make you avoid naming conflicts
+    # CR: [MD] I'd *usually* disagree, having floating names is far more confusing most of the times than having them attached to a module.
+    # In this particular case... glob is familiar enough to do w/e you wish.
     for filename in glob.glob(os.path.join(ORIGINAL_SONGS_ROOT_PATH, "*" + ORIGINAL_SONGS_EXTENSION)):
         # CR: see comment in the beginning of the page
         songs_jsons.append(Reading.read_json(filename)[DocumentKeys.TRACK])
@@ -39,6 +42,10 @@ def write_new_obj_files(path_template, objects):
         # CR: see comment in the beginning of the page
         Writing.write_json(path_template % obj_id, obj.__dict__)
 
+
+# CR: [MD] Relating to the following functions:
+# I usually expect 'create' type of functions to return something. In this case it'd be better to name all of these 'add'.
+# Are any of them supposed to be used outside this module? Set them to private ones.
 
 # CR: is obj necessary?
 # CR: why is this method necessary? Put the logic of artists in "build from song" method to a list
@@ -67,6 +74,7 @@ def create_album_obj(album_id, album_name, owner_artist_id, song_id):
     album_objects[album_id].add_song(song_id)
 
 
+# CR: [MD] This function is pretty unclear, especially without type hints. I assume `song` is a `dict` type because you use bracket notation on it.
 def build_objects_from_song(song):
     album_id = song[DocumentKeys.ALBUM][DocumentKeys.ID]
     album_name = song[DocumentKeys.ALBUM][DocumentKeys.NAME]

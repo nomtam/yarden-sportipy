@@ -1,3 +1,4 @@
+# CR: [MD] Why is it inside a `versions` module?
 import logging
 from typing import Dict, List
 
@@ -9,6 +10,7 @@ from storage.database import DocumentDataBase
 
 # CR: this class might not be named GodClass but it's a god class.
 #  it loads data, searches on it and lets you save data
+# CR: [MD] The wording 'Base' is usually reserved used in a class name when it's an abstract one. 'App' is great here
 class AppBase:
     def __init__(self, db: DocumentDataBase):
         self.db = db
@@ -40,10 +42,15 @@ class AppBase:
         except ReachedFreePlaylistSongsLimit:
             logging.info(f"{user_id} failed to add a playlist because he reached the free playlist songs num limit")
         else:
+            # CR: [MD] Useless comment
             self.db.save_doc(user.__dict__, CollectionNames.USERS_KEY)  # save new user state to the db
 
     def limit_results(self, user_id, results):
-        # CR: What if id doesn't exist?
+        # CR: [MD] Something to think about -
+        # We'd want to be able to tell the DAL (in this case the database module) what the limits are with each access.
+        # For in the real world we'd save both network bandwidth (when querying results from a REST service or a DB) and processing time.
+
+        # CR: What if id doesn't exist? [MD] A KeyError exception of course
         user_account_type = self.users[user_id].account_type
         if user_account_type == AccountTypes.FREE:
             results = results[:Limits.FREE_RESULTS_NUM]
